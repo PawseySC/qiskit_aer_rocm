@@ -2,7 +2,7 @@
 
 Scripts to build a ROCm-enabled Qiskit-Aer wheel and install it in a Python 3.11 virtual environment on the Pawsey Setonix GPU cluster.
 
-> **Tip:** For runtime guidance on GPU acceleration see [GPU Simulation](https://qiskit.github.io/qiskit-aer/tutorials/1_aersimulator.html#GPU-Simulation). The steps there mention CUDA/NVIDIA, but they apply equally to this ROCm/AMD build.
+> **Note:** For runtime guidance on GPU acceleration see [GPU Simulation](https://qiskit.github.io/qiskit-aer/tutorials/1_aersimulator.html#GPU-Simulation). The steps there mention CUDA/NVIDIA, but they apply equally to this ROCm/AMD build.
 
 ## Quick Start
 
@@ -15,7 +15,7 @@ cd  qiskit_aer_rocm
 2. Submit the build job:
 
 ```bash
-sbatch -N1 --gpus=1 -p gpu-dev --account=${PAWSEY_PROJECT}-gpu \
+sbatch -N 1 --gpus=1 -p gpu-dev --account=${PAWSEY_PROJECT}-gpu \
 bash install-qiskit-source-rocm-setonix.sh
 ```
 
@@ -31,11 +31,11 @@ What the job does:
 Override defaults by exporting variables before the `sbatch` call:
 
 ```bash
-export AER_VER="0.16.0"         # default: 0.16.1
-export QISKIT_TERRA_VER="0.45.0"       # default: 0.46.0
+export AER_VER="0.16.0"                # default: 0.17
+export QISKIT_TERRA_VER="0.43.0"       # default: 0.46.0
 export VENV_DIR="$PWD/my-aer-venv"     # default: $MYSCRATCH/qiskit-aer-venv-$AER_VER
 
-sbatch --export=ALL -N1 --gpus=1 -p gpu-dev \
+sbatch --export=ALL -N 1 --gpus=1 -p gpu-dev \
 --account=${PAWSEY_PROJECT}-gpu bash install-qiskit-source-rocm-setonix.sh
 ```
 
@@ -58,7 +58,8 @@ source /path/to/repo/use-qiskit-aer-rocm-setonix.sh
 
 * It loads the required modules if they are not already loaded.
 * If a venv is already active (`$VIRTUAL_ENV`), it keeps using it.
-* Otherwise it activates the configured venv (creating it if needed) or reminds you to run the install job.
+* Otherwise it activates the configured venv (creating it if needed)
+* If it finds that the request Qiskit-Aer version is not installed, it installs it.
 
 
 ## Troubleshooting
