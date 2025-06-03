@@ -4,8 +4,8 @@
 export qiskit_ver="${QISKIT_VER:-2.0.2}"
 # If AER_VER is set, use it; otherwise default to 0.16.1
 export aer_ver="${AER_VER:-0.16.1}"
-# If VENV_DIR is set, use it; otherwise default to "$MYSCRATCH/qiskit-aer-venv"
-venv_dir="$MYSCRATCH/qiskit-aer-venv"
+# If VENV_DIR is set, use it; otherwise default to "$MYSCRATCH/qiskit-aer-venv-${qiskit_ver}"
+venv_dir="$MYSCRATCH/qiskit-aer-venv-${qiskit_ver}"
 
 # Required to build qiskit-aer
 py_ver="3.11.6"
@@ -39,30 +39,31 @@ module load "py-numpy/$numpy_ver"
 module load "py-scikit-learn/$scikit_ver"
 module load "py-scipy/$scipy_ver"
 
-# Create a new virtual environment if none doesn't exist at $venv_dir
-if [[ ! -d "$venv_dir" ]]; then
-    echo "Creating and activating a new Python virtual environment at $venv_dir"
-    python -m venv "$venv_dir"
-    source "$venv_dir/bin/activate"
-    python -m pip install --upgrade pip
-    python -m pip install --upgrade setuptools wheel
+# Are we using an already active virtual environment, do we need to activate
+# one that already exists, or does one need to be created?
+if [[ -n "${VIRTUAL_ENV:-}" ]]; then
+    # A venv is already active, use it.
+    echo "Detected active virtual environment at: $VIRTUAL_ENV"
 else
-    echo "Activating virtual environment..."
+    # No active venv, create or reuse $venv_dir
+    if [[ ! -d "$venv_dir" ]]; then
+        echo "Creating new virtual environment at: $venv_dir"
+        python -m venv "$venv_dir"
+    fi
+    echo "Activating virtual environment: $venv_dir"
     source "$venv_dir/bin/activate"
 fi
 
 # Check wether qiskit-aer is installed, if it isn't, install it
-if python - <<EOF 2>/dev/null
-import qiskit_aer
-if qiskit_aer.__version__ == "$aer_ver":
-    print("OK")
-else:
-    raise RuntimeError(f"Version mismatch: found {qiskit_aer.__version__}, expected $aer_ver")
-EOF
-then
-  exit 0
+current_ver=$(python -m pip show qiskit-aer 2>/dev/null | awk '/^Version:/{print $2}')
+
+if [[ -n "$current_ver" ]]; then
+  short_cur=${current_ver%%[+!~-]*}
+  if [[ "$short_cur" != "$aer_ver" ]]; then
+    echo "qiskit-aer $current_ver found, but need $aer_ver — rebuilding."
+    source "$script_dir/install-qiskit-aer-rocm-setonix.sh"
+  fi
 else
-  echo "qiskit-aer $aer_ver is not installed. Commencing build..."
+  echo "qiskit-aer not installed — building."
   source "$script_dir/install-qiskit-aer-rocm-setonix.sh"
-  exit 0
 fi

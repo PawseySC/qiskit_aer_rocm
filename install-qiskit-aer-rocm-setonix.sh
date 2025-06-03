@@ -24,8 +24,16 @@ cd "$clone_dir"
 # set an isolated conan cache outside of $HOME
 export CONAN_USER_HOME="$clone_dir/.conan_cache"
 
+# set the pip cache to avoid file quota issues on $MYSOFTWARE
+export PIP_CACHE_DIR="$source_dir/.pip_cache"
+mkdir -p "$PIP_CACHE_DIR"
+
 # Clean any previous build artifacts
-rm -rf _skbuild $CONAN_USER_HOME
+rm -rf _skbuild "$CONAN_USER_HOME" "$PIP_CACHE_DIR"
+
+# Update build tools
+python -m pip install --upgrade pip
+python -m pip install --upgrade setuptools wheel
 
 # Install Aer's development requirements in the venv
 python -m pip install -r requirements-dev.txt
@@ -40,14 +48,14 @@ python setup.py bdist_wheel -- \
   -DCMAKE_CXX_COMPILER=hipcc \
   -DCMAKE_CXX_FLAGS="--gcc-toolchain=$toolchain_path" \
   -DCMAKE_BUILD_TYPE=Release \
-  -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \ # For hip-config.cmake
+  -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
   -DAER_MPI=True \
   -DAER_THRUST_BACKEND=ROCM \
   -DAER_ROCM_ARCH=gfx90a \
   -DAER_DISABLE_GDR=True
 
 # Install the newly built wheel
-python -m pip install "dist/*.whl"
+python -m pip install dist/*.whl
 
 # Return to the original script directory
 cd "$script_dir"
