@@ -25,11 +25,10 @@ export CONAN_USER_HOME="$clone_dir/.conan_cache"
 
 # set the pip cache to avoid file quota issues on $MYSOFTWARE
 export PIP_CACHE_DIR="$source_dir/.pip_cache"
-export PYTHONUSERBASE="$source_dir/.pythonuserbase"
-mkdir -p "$PIP_CACHE_DIR" "PYTHONUSERBASE"
+mkdir -p "$PIP_CACHE_DIR"
 
 # Clean previous build artifacts
-#rm -rf _skbuild
+rm -rf _skbuild "$CONAN_USER_HOME"
 
 # Update/Install build tools
 python -m pip install --upgrade pip
