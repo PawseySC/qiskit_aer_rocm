@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# If QISKIT_VER is set, use it; otherwise default to 2.0.2
-export qiskit_ver="${QISKIT_VER:-2.0.2}"
+# If QISKIT_TERRA_VER is set, use it; otherwise default to 0.46.0
+export qiskit_terra_ver="${QISKIT_TERRA_VER:-0.46.0}"
 # If AER_VER is set, use it; otherwise default to 0.16.1
-export aer_ver="${AER_VER:-0.16.1}"
-# If VENV_DIR is set, use it; otherwise default to "$MYSCRATCH/qiskit-aer-venv-${qiskit_ver}"
-venv_dir="$MYSCRATCH/qiskit-aer-venv-${qiskit_ver}"
+export aer_ver="${AER_VER:-0.17}"
+# If VENV_DIR is set, use it; otherwise default to "$MYSCRATCH/qiskit-aer-venv-${qiskit_terra_ver}"
+venv_dir="$MYSCRATCH/qiskit-aer-venv-${qiskit_terra_ver}"
 
 # Required to build qiskit-aer
 py_ver="3.11.6"

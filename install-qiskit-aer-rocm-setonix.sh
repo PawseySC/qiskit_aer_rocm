@@ -25,10 +25,11 @@ export CONAN_USER_HOME="$clone_dir/.conan_cache"
 
 # set the pip cache to avoid file quota issues on $MYSOFTWARE
 export PIP_CACHE_DIR="$source_dir/.pip_cache"
-mkdir -p "$PIP_CACHE_DIR"
+export PYTHONUSERBASE="$source_dir/.pythonuserbase"
+mkdir -p "$PIP_CACHE_DIR" "PYTHONUSERBASE"
 
 # Clean previous build artifacts
-rm -rf _skbuild
+#rm -rf _skbuild
 
 # Update/Install build tools
 python -m pip install --upgrade pip
@@ -36,7 +37,7 @@ python -m pip install --upgrade setuptools wheel
 python -m pip install --upgrade cmake
 
 # Install Aer's development requirements in the venv
-python -m pip install "qiskit==${qiskit_ver}"
+python -m pip install "qiskit-terra==${qiskit_ver}"
 python -m pip install -r requirements-dev.txt
 python -m pip install pybind11
 
