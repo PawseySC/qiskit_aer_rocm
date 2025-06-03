@@ -31,9 +31,9 @@ What the job does:
 Override defaults by exporting variables before the `sbatch` call:
 
 ```bash
-export QISKIT_AER_VER="0.16.0"         # default: 0.16.1
-export QISKIT_VER="1.4.0"              # default: 2.0.2
-export VENV_DIR="$PWD/my-aer-venv"     # default: $MYSCRATCH/qiskit-aer-venv-$QISKIT_AER_VER
+export AER_VER="0.16.0"         # default: 0.16.1
+export QISKIT_TERRA_VER="0.45.0"       # default: 0.46.0
+export VENV_DIR="$PWD/my-aer-venv"     # default: $MYSCRATCH/qiskit-aer-venv-$AER_VER
 
 sbatch --export=ALL -N1 --gpus=1 -p gpu-dev \
 --account=${PAWSEY_PROJECT}-gpu bash install-qiskit-source-rocm-setonix.sh
@@ -44,7 +44,7 @@ sbatch --export=ALL -N1 --gpus=1 -p gpu-dev \
 If you build with custom variables, re-export them in any new session:
 
 ```bash
-export QISKIT_AER_VER="0.17.0"
+export AER_VER="0.17.0"
 export VENV_DIR="$PWD/my-aer-venv"
 ```
 
