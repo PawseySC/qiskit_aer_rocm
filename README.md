@@ -2,7 +2,7 @@
 
 Scripts to build a ROCm-enabled Qiskit-Aer wheel and install it in a Python 3.11 virtual environment on the Pawsey Setonix GPU cluster.
 
-For information on configuring the Qiskit-Aer backend to use GPU-acceleration see [GPU Simulation](https://qiskit.github.io/qiskit-aer/tutorials/1_aersimulator.html#GPU-Simulation) in the Qiskit-Aer docs.
+For information on configuring the Qiskit-Aer backend to use GPU-acceleration see [GPU Simulation](https://qiskit.github.io/qiskit-aer/tutorials/1_aersimulator.html#GPU-Simulation) in the Qiskit-Aer docs. While these instructions refer to CUDA and NVIDIA, they also apply to the backend built for AMD GPUs with ROCm support.
 
 ## Quick Start
 
