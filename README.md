@@ -12,7 +12,7 @@ git clone https://github.com/PawseySC/qiskit_aer_rocm.git
 cd  qiskit_aer_rocm
 
 # Submit build job – defaults to QISKIT_AER_VER=0.16.1, venv=$MYSCRATCH/qiskit-aer-venv-0.16.1
-sbatch -N1 --gpus=1 -p gpu-dev --account=${PAWSEY_PROJECT}-gpu install-qiskit-source-rocm-setonix
+sbatch -N1 --gpus=1 -p gpu-dev --account=${PAWSEY_PROJECT}-gpu bash install-qiskit-source-rocm-setonix.sh
 ````
 
 The job:
@@ -31,7 +31,7 @@ export QISKIT_AER_VER="0.16.0"           # default: 0.16.1
 export QISKIT_VER="1.4.0"                # default: 2.0.1
 export VENV_DIR="$PWD/my-aer-venv"       # default: $MYSCRATCH/qiskit-aer-venv-$QISKIT_AER_VER
 
-sbatch --export=ALL -N 1 --gpus=1 -p gpu-dev --account=${PAWSEY_PROJECT}-gpu install-qiskit-source-rocm-setonix
+sbatch --export=ALL -N 1 --gpus=1 -p gpu-dev --account=${PAWSEY_PROJECT}-gpu bash install-qiskit-source-rocm-setonix.sh
 ```
 
 ## Using the Environment
