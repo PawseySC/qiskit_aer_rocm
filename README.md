@@ -58,7 +58,8 @@ source /path/to/repo/use-qiskit-aer-rocm-setonix.sh
 
 * It loads the required modules if they are not already loaded.
 * If a venv is already active (`$VIRTUAL_ENV`), it keeps using it.
-* Otherwise it activates the configured venv (creating it if needed) or reminds you to run the install job.
+* Otherwise it activates the configured venv (creating it if needed)
+* If it finds that the request Qiskit-Aer version is not installed, it installs it.
 
 
 ## Troubleshooting
