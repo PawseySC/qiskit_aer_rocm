@@ -2,6 +2,8 @@
 
 Scripts to build a ROCm-enabled Qiskit-Aer wheel and install it in a Python 3.11 virtual environment on the Pawsey Setonix GPU cluster.
 
+For information on configuring the Qiskit-Aer backend to use GPU-acceleration see [GPU Simulation](https://qiskit.github.io/qiskit-aer/tutorials/1_aersimulator.html#GPU-Simulation) in the Qiskit-Aer docs.
+
 ## Quick Start
 
 ```bash
@@ -62,3 +64,5 @@ rm -rf qiskit-rocm-src/      # cloned source + Conan cache
 rm -rf qiskit-aer-venv*      # default virtual env(s)
 # or: rm -rf "$VENV_DIR"
 ```
+
+
