@@ -44,7 +44,7 @@ sbatch --export=ALL -N1 --gpus=1 -p gpu-dev \
 If you build with custom variables, re-export them in any new session:
 
 ```bash
-export QISKIT_AER_VER="0.17.0"
+export QISKIT_AER_VER="0.16.0"
 export VENV_DIR="$PWD/my-aer-venv"
 ```
 
