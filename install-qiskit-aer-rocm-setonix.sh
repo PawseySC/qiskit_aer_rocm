@@ -17,7 +17,6 @@ mkdir -p "$source_dir"
 
 # Clone Qiskit-Aer at the requested tag/branch
 clone_dir="$source_dir/qiskit-aer-${aer_ver}"
-rm -rf "$clone_dir"
 git clone -b "$aer_ver" "https://github.com/Qiskit/qiskit-aer" "$clone_dir"
 cd "$clone_dir"
 
@@ -28,14 +27,16 @@ export CONAN_USER_HOME="$clone_dir/.conan_cache"
 export PIP_CACHE_DIR="$source_dir/.pip_cache"
 mkdir -p "$PIP_CACHE_DIR"
 
-# Clean any previous build artifacts
-rm -rf _skbuild "$CONAN_USER_HOME" "$PIP_CACHE_DIR"
+# Clean previous build artifacts
+rm -rf _skbuild
 
-# Update build tools
+# Update/Install build tools
 python -m pip install --upgrade pip
 python -m pip install --upgrade setuptools wheel
+python -m pip install --upgrade cmake
 
 # Install Aer's development requirements in the venv
+python -m pip install "qiskit==${qiskit_ver}"
 python -m pip install -r requirements-dev.txt
 python -m pip install pybind11
 
