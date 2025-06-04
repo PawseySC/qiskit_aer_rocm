@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# If QISKIT_TERRA_VER is set, use it; otherwise default to 0.46.0
-export qiskit_terra_ver="${QISKIT_TERRA_VER:-0.46.0}"
+# If QISKIT_VER is set, use it; otherwise default to 2.0.2
+export qiskit_ver="${QISKIT_VER:-2.0.2}"
 # If AER_VER is set, use it; otherwise default to 0.16.1
 export aer_ver="${AER_VER:-0.17}"
-# If VENV_DIR is set, use it; otherwise default to "$MYSCRATCH/qiskit-aer-venv-${qiskit_terra_ver}"
-venv_dir="${VENV_DIR:-$MYSCRATCH/qiskit-aer-venv-${qiskit_terra_ver}}"
+# If VENV_DIR is set, use it; otherwise default to "$MYSCRATCH/qiskit-aer-venv-${qiskit_ver}"
+venv_dir="${VENV_DIR:-$MYSCRATCH/qiskit-aer-venv-${qiskit_ver}}"
 
 # Required to build qiskit-aer
 py_ver="3.11.6"
@@ -39,21 +39,14 @@ module load "py-numpy/$numpy_ver"
 module load "py-scikit-learn/$scikit_ver"
 module load "py-scipy/$scipy_ver"
 
-# Are we using an already active virtual environment, do we need to activate
-# one that already exists, or does one need to be created?
-if [[ -n "${VIRTUAL_ENV:-}" ]]; then
-    # A venv is already active, use it.
-    echo "Detected active virtual environment at: $VIRTUAL_ENV"
-    export venv_dir=$VIRTUAL_ENV
-else
-    # No active venv, create or reuse $venv_dir
-    if [[ ! -d "$venv_dir" ]]; then
-        echo "Creating new virtual environment at: $venv_dir"
-        python -m venv "$venv_dir"
-    fi
-    echo "Activating virtual environment: $venv_dir"
-    source "$venv_dir/bin/activate"
+
+# Create or reuse $venv_dir
+if [[ ! -d "$venv_dir" ]]; then
+    echo "Creating new virtual environment at: $venv_dir"
+    python -m venv "$venv_dir"
 fi
+echo "Activating virtual environment: $venv_dir"
+source "$venv_dir/bin/activate"
 
 # Check wether qiskit-aer is installed, if it isn't, install it
 current_ver=$(python -m pip show qiskit-aer 2>/dev/null | awk '/^Version:/{print $2}')
