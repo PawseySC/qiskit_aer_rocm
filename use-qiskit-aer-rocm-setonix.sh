@@ -5,7 +5,7 @@ export qiskit_terra_ver="${QISKIT_TERRA_VER:-0.46.0}"
 # If AER_VER is set, use it; otherwise default to 0.16.1
 export aer_ver="${AER_VER:-0.17}"
 # If VENV_DIR is set, use it; otherwise default to "$MYSCRATCH/qiskit-aer-venv-${qiskit_terra_ver}"
-venv_dir="$MYSCRATCH/qiskit-aer-venv-${qiskit_terra_ver}"
+venv_dir="${VENV_DIR:-$MYSCRATCH/qiskit-aer-venv-${qiskit_terra_ver}}"
 
 # Required to build qiskit-aer
 py_ver="3.11.6"
@@ -44,6 +44,7 @@ module load "py-scipy/$scipy_ver"
 if [[ -n "${VIRTUAL_ENV:-}" ]]; then
     # A venv is already active, use it.
     echo "Detected active virtual environment at: $VIRTUAL_ENV"
+    export venv_dir=$VIRTUAL_ENV
 else
     # No active venv, create or reuse $venv_dir
     if [[ ! -d "$venv_dir" ]]; then
@@ -60,8 +61,7 @@ current_ver=$(python -m pip show qiskit-aer 2>/dev/null | awk '/^Version:/{print
 if [[ -n "$current_ver" ]]; then
   short_cur=${current_ver%%[+!~-]*}
   if [[ "$short_cur" != "$aer_ver" ]]; then
-    echo "qiskit-aer $current_ver found, but need $aer_ver — rebuilding."
-    source "$script_dir/install-qiskit-aer-rocm-setonix.sh"
+    echo "Found qiskit-aer $current_ver..."
   fi
 else
   echo "qiskit-aer not installed — building."
