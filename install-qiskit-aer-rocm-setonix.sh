@@ -18,6 +18,7 @@ source $venv_dir/bin/activate
 mkdir -p "$source_dir"
 
 # Clone Qiskit-Aer at the requested tag/branch
+rm -rf $clone_dir
 clone_dir="$source_dir/qiskit-aer-${aer_ver}"
 git clone -b "$aer_ver" "https://github.com/Qiskit/qiskit-aer" "$clone_dir"
 cd "$clone_dir"
