@@ -8,7 +8,7 @@ if [[ -z "${aer_ver:-}" ]]; then
     exit 1
 fi
 
-if [[ -z "${qiskit_terra_ver:-}" ]]; then
+if [[ -z "${qiskit_ver:-}" ]]; then
     echo "Error: qiskit_ver is not set. Exiting." >&2
     exit 1
 fi
@@ -39,7 +39,7 @@ python -m pip install --upgrade setuptools wheel
 python -m pip install --upgrade cmake
 
 # Install Aer's development requirements in the venv
-python -m pip install "qiskit-terra==${qiskit_terra_ver}"
+python -m pip install "qiskit==${qiskit_ver}"
 python -m pip install -r requirements-dev.txt
 python -m pip install pybind11
 
