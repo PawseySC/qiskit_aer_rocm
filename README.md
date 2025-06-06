@@ -36,7 +36,7 @@ export QISKIT_VER="0.43.0"             # default: 2.0.2
 export VENV_DIR="$PWD/my-aer-venv"     # default: $MYSCRATCH/qiskit-aer-venv-$QISKIT_AER_VER
 
 salloc --export=ALL -N 1 --gpus=1 -p gpu-dev \
---account=${PAWSEY_PROJECT}-gpu bash use-qiskit-source-rocm-setonix.sh
+--account=${PAWSEY_PROJECT}-gpu bash use-qiskit-aer-rocm-setonix.sh
 ```
 
 ## Using the Environment
