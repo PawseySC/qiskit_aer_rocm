@@ -28,7 +28,7 @@ What the job does:
 
 ## Custom Build
 
-Override defaults by exporting variables before the `sbatch` call:
+Override defaults by exporting variables before the `salloc` call:
 
 ```bash
 export AER_VER="0.16.0"                # default: 0.17
