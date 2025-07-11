@@ -6,6 +6,12 @@ Scripts to build a ROCm-enabled Qiskit-Aer wheel and install it in a Python 3.11
 
 ## Quick Start
 
+1. Python virtual environments contain a lot of files and will quickly reach the user limit for `$HOME` and `$MYSOFTWARE`. So, first:
+
+```bash
+cd $MYSCRATCH
+```
+
 1. Clone:
 
 ```bash
